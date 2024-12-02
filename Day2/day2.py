@@ -69,6 +69,17 @@ def test_count_safe_report():
 
 
 ######### Part2 #########
+# Method 1
+def check_report_with_dampener_brute_force(report):
+    if (check_report(report)):
+        return 1
+    for i in range(len(report)):
+        one_item_dropped_report = report[:i] + report[i+1:]
+        if (check_report(one_item_dropped_report)):
+            return 1
+    return 0
+
+# Metho 2
 def remove_bad_diff(old_diffs, bad_id, left_or_right):
     if left_or_right == 'l':
         if bad_id == 0:
@@ -93,7 +104,7 @@ def check_report_with_dampener(one_report):
     bad_id = check_diff(diffs)
     if bad_id == report_length - 1:
         return 1
-    # The next two diffs have different directions, either can be the wrong bad id.
+    # The neighbour two diffs have different directions, either can be the wrong bad id.
     pre_bad_id = bad_id - 1
     good_id = report_length - 2
     if (pre_bad_id >= 0 ):
@@ -105,11 +116,9 @@ def check_report_with_dampener(one_report):
         new_bad_id = check_diff(new_diffs)
         if new_bad_id == good_id:
             return 1
-
     new_diffs = remove_bad_diff(diffs, bad_id, 'l')
     new_bad_id = check_diff(new_diffs)
     if new_bad_id == good_id:
-        # print("Passed left remove")
         return 1
     new_diffs = remove_bad_diff(diffs, bad_id, 'r')
     new_bad_id = check_diff(new_diffs)
@@ -117,21 +126,14 @@ def check_report_with_dampener(one_report):
         return 1
     return 0
 
-    
-
 def count_safe_report_with_dampener(file_name):
     with open('Day2/' + file_name, 'r') as file:
         safe_count = 0
-        ttl_count = 0
         for line in file:
             one_report = parse_report(line)
-            report_safety = check_report_with_dampener(one_report)
-            # if (report_safety == 1):
-            #     print(one_report)
-            safe_count += report_safety
-            ttl_count += 1
+            # safe_count += check_report_with_dampener_brute_force(one_report)
+            safe_count += check_report_with_dampener(one_report)
     return safe_count
-
 
 
 def test_count_safe_report_with_dampener(filename, answer):
