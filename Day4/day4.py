@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 def letter_int_mp(letter):
     if letter == 'X':
         return 0
@@ -50,7 +48,6 @@ def check_first_four_letters(input):
     return 1
 
 # test_read_input("sample.txt")
-
 
 # Given a list of input, check if "XMAS" or the encoded [0,1,2,3] pattern appears in this list.
 def check_one_line(line):
@@ -169,7 +166,6 @@ def check_matrix(input_matrix):
     pattern_cnt += check_anti_diagonal(input_matrix)
     return pattern_cnt
 
-
 def check_matrix_all_directions(input_matrix):
     return check_matrix(input_matrix) + check_matrix(flip_matrix(input_matrix))
 
@@ -184,7 +180,6 @@ def test_check_matrix_all_directions(file_nanme, answer):
 ######### Part1 #########
 # input_matrix = read_input("input.txt")
 # print(check_matrix_all_directions(input_matrix))
-
 
 
 ######### Part2 #########
@@ -219,7 +214,7 @@ def test_locate_a(file_nanme, answer):
     print("actual output: {}".format(locate_a(input_matrix)))
     print("expected ouput: {}".format(answer))
 
-test_locate_a("sample.txt", 9)
+# test_locate_a("sample.txt", 9)
 
-input_matrix = read_input("input.txt")
-print(locate_a(input_matrix))
+# input_matrix = read_input("input.txt")
+# print(locate_a(input_matrix))
