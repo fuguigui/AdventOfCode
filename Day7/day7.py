@@ -63,6 +63,7 @@ def test_check_equation_on_sample():
 
 # test_check_equation_on_sample()
 
+######### Part1 #########
 def main_part1():
     with open('Day7/input.txt', 'r') as file:
         ttl_sum = 0
@@ -74,6 +75,8 @@ def main_part1():
 
 # main_part1()
 
+
+######### Part2 #########
 def check_equation_with_concat(test_value, parsed_numbers):
     if len(parsed_numbers) == 1:
         return test_value == parsed_numbers[0]
@@ -92,4 +95,4 @@ def main_part2():
                 ttl_sum += test_value
         print(ttl_sum)
 
-main_part2()
+# main_part2()
