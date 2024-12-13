@@ -16,7 +16,6 @@ def test_read_input():
 
 DIRECTIONS = [(0, -1), (-1, 0), (0, 1), (1, 0)]
 
-######### Part1 #########
 def is_not_valid_index(i, j, max_i, max_j):
     return i < 0 or i >= max_i or j < 0 or j >= max_j
 
@@ -65,7 +64,6 @@ def main_part1():
 
 # main_part1()
 
-######### Part2 #########
 def init_fence(i, j):
     block_fences = set()
     for dir in DIRECTIONS:

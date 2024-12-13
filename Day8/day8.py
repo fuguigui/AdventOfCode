@@ -65,14 +65,12 @@ def test_calculate_antinodes(answer):
 
 # test_calculate_antinodes(14)
 
-######### Part1 #########
 def main_part1():
     height, width, annetas = read_input("input.txt")
     print(calculate_antinodes(height, width, annetas))
 
 # main_part1()
 
-######### Part2 #########
 def calculate_antinodes_per_direction(pair, height, width, antinodes):
     start_node = pair[0]
     next_node = pair[1]

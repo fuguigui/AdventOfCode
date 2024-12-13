@@ -86,7 +86,6 @@ def test_score_for_one_point():
 
 # test_score_for_one_point()
 
-######### Part1 #########
 def main_part1():
     scores = 0
     zeros, hiking_map, line_num, line_length = read_input("input.txt")
@@ -98,7 +97,6 @@ def main_part1():
 
 # main_part1()
 
-######### Part2 #########
 def create_rating_map(line_num, line_length):
     rating_map = []
     for i in range(line_num):
@@ -107,8 +105,6 @@ def create_rating_map(line_num, line_length):
 
 # The task for one point is: 1) keep going if possible; 2) return the score of this point.
 def rating_for_one_point(point_value, point, hiking_map, rating_map, line_num, line_length):
-    # print(f"current point: {point_value}: {point}")
-    # print_map(score_map)
     if rating_map[point[0]][point[1]] > 0:
         # this point has been walked.
         return rating_map[point[0]][point[1]]

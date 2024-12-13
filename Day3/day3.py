@@ -28,12 +28,13 @@ def test_valid_multiply_from_file(file_name, answer):
     print("actual output: {}".format(valid_multiply_from_file(file_name)))
     print("expected output: {}".format(answer))
         
-######### Part1 #########
 # test_valid_multiply_from_file("sample.txt", 161)
-# print(valid_multiply("input.txt"))
 
+def main_part1():
+    print(valid_multiply("input.txt"))
 
-######### Part2 #########
+# main_part1()
+
 def find_do_snippets(input):
     default_prefix_input = "do()" + input
     snippets = default_prefix_input.split("don\'t")
@@ -60,6 +61,8 @@ def test_do_valid_multiply(file_name, answer):
     print("expected output: {}".format(answer))
 
 # test_do_valid_multiply("sample2.txt", 48)
-# print(do_valid_multiply_from_file("input.txt"))
 
+def main_part2():
+    print(do_valid_multiply_from_file("input.txt"))
 
+# main_part2()

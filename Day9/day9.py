@@ -62,13 +62,10 @@ def test_checksum():
 
 # test_checksum()
 
-######### Part1 #########
 def main_part1():
     print("actual output: {}".format(checksum(read_input("input.txt"))))
 
 # main_part1()
-
-######### Part2 #########
 
 def read_input(file_name):
     with open('Day9/' + file_name, 'r') as file:
@@ -123,4 +120,4 @@ def test_checksum2():
 def main_part2():
     print("actual output: {}".format(checksum2(read_input("input.txt"))))
 
-main_part2()
+# main_part2()

@@ -106,16 +106,12 @@ def test_walk_in_the_puzzle(file_name, answer):
         
 # test_walk_in_the_puzzle("sample.txt", 41)
 
-
-######### Part1 #########
 def main_part1():
     puzzles, start_x, start_y, start_direction = read_input("input.txt")
     print(walk_in_the_puzzle(1, puzzles, len(puzzles[0]), len(puzzles), start_x, start_y, start_direction))
 
 # main_part1()
 
-
-######### Part2 #########
 def make_index(x,y):
     return f"Index:{x},{y}"
     

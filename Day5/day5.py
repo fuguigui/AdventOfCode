@@ -70,28 +70,30 @@ def get_middle_number(input_list):
     assert(len(input_list) % 2 == 1)
     return input_list[int((len(input_list) - 1 )/2)]
 
-def get_middle_sums(file_name):
-    parsed_rules, parsed_lists = read_input(file_name)
+def test_sample():
+    parsed_rules, parsed_lists = read_input("sample.txt")
     num_to_bigger_map = build_num_to_bigger_map(parsed_rules)
     # print(num_to_bigger_map)
     middle_sum = 0
     for parsed_list in parsed_lists:
         if check_order(parsed_list, num_to_bigger_map):
             middle_sum += get_middle_number(parsed_list)
-    return middle_sum
-
-
-def test_sample():
-    print("actual output: {}".format(get_middle_sums("sample.txt")))
+    print("actual output: {}".format(middle_sum))
     print("expected output: {}".format(143))
 
 # test_sample()
 
-######### Part1 #########
-# print(get_middle_sums("input.txt"))
+def main_part1():
+    parsed_rules, parsed_lists = read_input("input.txt")
+    num_to_bigger_map = build_num_to_bigger_map(parsed_rules)
+    # print(num_to_bigger_map)
+    middle_sum = 0
+    for parsed_list in parsed_lists:
+        if check_order(parsed_list, num_to_bigger_map):
+            middle_sum += get_middle_number(parsed_list)
+    print(middle_sum)
 
-
-######### Part2 #########
+main_part1()
 
 def filter_bigger_map(input_list, num_to_bigger_map):
     in_list_map = {}

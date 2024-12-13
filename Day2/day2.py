@@ -63,12 +63,13 @@ def test_count_safe_report():
     print("actual output: {}".format(count_safe_report('sample.txt')))
     print("expected output: 2")
 
-######### Part1 #########
 # test_count_safe_report()
-# print(count_safe_report('input.txt'))
 
+def main_part1():
+    print(count_safe_report('input.txt'))
 
-######### Part2 #########
+# main_part1()
+
 # Method 1
 def check_report_with_dampener_brute_force(report):
     if (check_report(report)):
@@ -79,7 +80,7 @@ def check_report_with_dampener_brute_force(report):
             return 1
     return 0
 
-# Metho 2
+# Method 2
 def remove_bad_diff(old_diffs, bad_id, left_or_right):
     if left_or_right == 'l':
         if bad_id == 0:
@@ -136,10 +137,15 @@ def count_safe_report_with_dampener(file_name):
     return safe_count
 
 
-def test_count_safe_report_with_dampener(filename, answer):
-    print("actual output: {}".format(count_safe_report_with_dampener(filename)))
-    print("expected output: {}".format(answer))
+def test_count_safe_report_with_dampener():
+    examples = [('sample.txt', 10), ('sample2.txt', 4)]
+    for example in examples:
+        print("actual output: {}".format(count_safe_report_with_dampener(example[0])))
+        print("expected output: {}".format(example[1]))
 
-# test_count_safe_report_with_dampener('sample.txt', 10)
-# test_count_safe_report_with_dampener('sample2.txt', 4)
-print(count_safe_report_with_dampener('input.txt'))
+# test_count_safe_report_with_dampener()
+
+def main_part2():
+    print(count_safe_report_with_dampener('input.txt'))
+
+# main_part2()

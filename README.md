@@ -2,4 +2,7 @@ My solution in python for https://adventofcode.com/2024.
 
 How to run:
 
-You can load the whole repo in VS code and for each python file, decomment necessay codes (usually, the last line `print(function_name(input_file_name))` below each ######### Part1 or 2 #########) and run the file in VS code.
+1.  load the whole repo in VS code
+2.  for each day, open the python file named as `dayXX.py`, 
+3.  Uncomment the line `main_part1()` for part1 or (`main_part2()`) for part2.
+4.  run the current python file.

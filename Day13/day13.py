@@ -73,8 +73,6 @@ def main_part1():
 
 # main_part1()
 
-######### Part2 #########
-
 def parse_one_puzzle(three_line_per_puzzle):
     pattern = r"\d+"
     A = tuple(int(i) for i in re.findall(pattern, three_line_per_puzzle[0]))

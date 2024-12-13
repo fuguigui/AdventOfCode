@@ -8,7 +8,6 @@ def test_read_input():
 
 # test_read_input()
 
-######### Part1 #########
 def is_even_stone(num):
     return len(str(num)) % 2 == 0
 
@@ -52,7 +51,6 @@ def main_part1():
 
 # main_part1()
 
-######### Part2 #########
 def stone_transform_with_memory(stone, left_times, memory):
     if (stone, left_times) in memory:
         return memory[(stone, left_times)]
@@ -75,4 +73,4 @@ def main_part2():
         num_stones += stone_transform_with_memory(stone, 75, memory)
     print(num_stones)
 
-main_part2()
+# main_part2()

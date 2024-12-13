@@ -32,6 +32,14 @@ def test_absolute_distance():
     print("actual output: {}".format(absolute_distance(left_list, right_list)))
     print("expected output: 11")
 
+# test_absolute_distance()
+
+def main_part1():
+    left_list, right_list = read_input()
+    print(absolute_distance(left_list, right_list))
+
+# main_part1()
+
 def count_frequency(numbers):
     frequency_map = defaultdict(int)
     for i in numbers:
@@ -52,13 +60,10 @@ def test_similarity_score():
     print("actual output: {}".format(similarity_score(left_list, right_list)))
     print("expected output: 31")
 
-######### Part1 #########
-# test_absolute_distance()
-# left_list, right_list = read_input()
-# print(absolute_distance(left_list, right_list))
-
-######### Part2 #########
 # test_similarity_score()
 
-left_list, right_list = read_input()
-print(similarity_score(left_list, right_list))
+def main_part2():
+    left_list, right_list = read_input()
+    print(similarity_score(left_list, right_list))
+
+# main_part2()

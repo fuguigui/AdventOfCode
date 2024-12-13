@@ -33,7 +33,6 @@ def print_matrix(input_matrix):
 def flip_matrix(input_matrix):
     output_matrix = []
     height = len(input_matrix)
-    # width = len(input_matrix[0])
     for i in range(height-1,-1,-1):
         new_line = input_matrix[i][::-1]
         output_matrix.append(new_line)
@@ -57,8 +56,6 @@ def check_one_line(line):
     pattern_cnt = 0
     for i, item in enumerate(line[:-3]):
         if item == 0:
-            # if check_first_four_letters(line[i:i+4]) == 1:
-                # print(i)
             pattern_cnt += check_first_four_letters(line[i:i+4])
     return pattern_cnt
 
@@ -169,7 +166,6 @@ def check_matrix(input_matrix):
 def check_matrix_all_directions(input_matrix):
     return check_matrix(input_matrix) + check_matrix(flip_matrix(input_matrix))
 
-
 def test_check_matrix_all_directions(file_nanme, answer):
     input_matrix = read_input(file_nanme)
     print("actual output: {}".format(check_matrix_all_directions(input_matrix)))
@@ -177,12 +173,11 @@ def test_check_matrix_all_directions(file_nanme, answer):
 
 # test_check_matrix_all_directions("sample.txt", 18)
  
-######### Part1 #########
-# input_matrix = read_input("input.txt")
-# print(check_matrix_all_directions(input_matrix))
+def main_part1():
+    print(check_matrix_all_directions(read_input("input.txt")))
 
+# main_part1()
 
-######### Part2 #########
 def check_ms(upper, down):
     if upper == 1:
         return down == 3
@@ -216,5 +211,7 @@ def test_locate_a(file_nanme, answer):
 
 # test_locate_a("sample.txt", 9)
 
-# input_matrix = read_input("input.txt")
-# print(locate_a(input_matrix))
+def main_part2():
+    print(locate_a(read_input("input.txt")))
+
+main_part2()
