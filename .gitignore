@@ -1,2 +1,5 @@
 .venv/*
 *_ignore.py
+bin/*
+lib/*
+pyvenv.cfg
