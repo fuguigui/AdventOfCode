@@ -68,12 +68,6 @@ def perform_movements(start_pos, warehouse_map, movements):
         if move_i == pre_move and not pre_move_successful:
             i += 1
             continue
-        verbose = False
-        if i >= 3960 and i <= 3970:
-            verbose = True
-        if verbose:
-            print(f"try_to_move for {i}, {start_pos}, {move_i}")
-            print_map(warehouse_map[32:37])
         start_pos, pre_move_successful = try_to_move(start_pos, move_i, warehouse_map, False)
         pre_move = move_i
         i += 1
@@ -124,7 +118,7 @@ def try_to_move_horizontal(start_pos, movement, warehouse_map):
     if start_code == char_num_map['.']:
         return start_pos, True
     next_pos = get_next_pos(start_pos, movement)
-    _, next_move_successful = try_to_move(next_pos, movement, warehouse_map)
+    _, next_move_successful = try_to_move_horizontal(next_pos, movement, warehouse_map)
     if next_move_successful:
         warehouse_map[next_pos[0]][next_pos[1]] = start_code
         warehouse_map[start_pos[0]][start_pos[1]] = char_num_map['.']
@@ -133,36 +127,36 @@ def try_to_move_horizontal(start_pos, movement, warehouse_map):
         return start_pos, False
     
 def find_next_positions(pos, movement, warehouse_map):
-    next_positions = set()
     direct_next_pos = get_next_pos(pos, movement)
-    next_positions.add(direct_next_pos)
     next_code = warehouse_map[direct_next_pos[0]][direct_next_pos[1]] 
     if next_code == char_num_map['[']:
-        next_positions.add((direct_next_pos[0], direct_next_pos[1] + 1))
+        return set([direct_next_pos, (direct_next_pos[0], direct_next_pos[1] + 1)])
     elif next_code == char_num_map[']']:
-        next_positions.add((direct_next_pos[0], direct_next_pos[1] - 1))
-    # print(f"find_next_positions for cur_position {movement} {pos} and got next_node symbol {next_code} returning {next_positions}")
-    return next_positions
+        return set([(direct_next_pos[0], direct_next_pos[1] - 1), direct_next_pos])
+    return set([direct_next_pos])
 
 def check_movibility(positions, movement, warehouse_map, verbose=False):
-    next_positions = set()
+    next_check_positions = set()
     if verbose:
         print(f"check_movibility for {positions}")
     for pos in positions:
-        if warehouse_map[pos[0]][pos[1]] == char_num_map['#']:
-            return [], False
-        if warehouse_map[pos[0]][pos[1]] != char_num_map['.']:
-            next_positions |= find_next_positions(pos, movement, warehouse_map)
-    if len(next_positions) == 0:
+        for next_pos in find_next_positions(pos, movement, warehouse_map):
+            if next_pos in next_check_positions:
+                continue
+            next_code = warehouse_map[next_pos[0]][next_pos[1]] 
+            if next_code == char_num_map['#']:
+                return [], False
+            if next_code != char_num_map['.']:
+                next_check_positions.add(next_pos)
+    if len(next_check_positions) == 0:
         if verbose:
             print(f"movable!")
-        return [], True
+        return [pos for pos in positions], True
     if verbose:
-        print(f"next_positions: {next_positions}")
-    next_lists, movibility = check_movibility(next_positions, movement, warehouse_map, verbose)
+        print(f"next_positions: {next_check_positions}")
+    to_move_list, movibility = check_movibility(next_check_positions, movement, warehouse_map, verbose)
     if movibility:
-        next_lists.extend(positions)
-        return next_lists, True
+        return to_move_list + [pos for pos in positions], True
     return [], False
 
 def move_items(all_items, movement, warehouse_map, verbose=False):
@@ -170,25 +164,28 @@ def move_items(all_items, movement, warehouse_map, verbose=False):
     if verbose:
         print(f"move_items: for {movement}: {all_items}")
     for item in all_items:
-        cur_code = warehouse_map[item[0]][item[1]]
         next_pos = get_next_pos(item, movement)
         if verbose:
             print(f"item: {item}, next_pos: {next_pos}")
-        warehouse_map[next_pos[0]][next_pos[1]] = cur_code
+        warehouse_map[next_pos[0]][next_pos[1]] = warehouse_map[item[0]][item[1]]
         warehouse_map[item[0]][item[1]] = char_num_map['.']
     if verbose:
         print("finish one move")
     return next_pos
 
+def try_to_move_vertical(start_pos, movement, warehouse_map, verbose=False):
+    all_items, movibility = check_movibility(set([start_pos]), movement, warehouse_map, verbose)
+    if movibility:
+        move_items(all_items, movement, warehouse_map, verbose)
+        return get_next_pos(start_pos, movement), True
+    return start_pos, False
+
+
 def try_to_move(start_pos, movement, warehouse_map, verbose=False):
     if movement in ('<', '>'):
         return try_to_move_horizontal(start_pos, movement, warehouse_map)
-    all_items, movibility = check_movibility(set([start_pos]), movement, warehouse_map, verbose)
-    if movibility:
-        next_pos = move_items(all_items, movement, warehouse_map, verbose)
-        return next_pos, True
-    return start_pos, False
-
+    return try_to_move_vertical(start_pos, movement, warehouse_map, verbose)
+    
 def test_perform_movements():
     start_pos, warehouse_map, movements = read_input("sample3.txt")
     perform_movements(start_pos, warehouse_map, movements)
