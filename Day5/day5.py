@@ -93,7 +93,7 @@ def main_part1():
             middle_sum += get_middle_number(parsed_list)
     print(middle_sum)
 
-main_part1()
+# main_part1()
 
 def filter_bigger_map(input_list, num_to_bigger_map):
     in_list_map = {}
@@ -124,10 +124,9 @@ def get_middle_number_reordered(input_list, bigger_map, cur_index, aim_index):
             old_values.remove(biggest_num)
         new_bigger_map[input] = old_values
     return get_middle_number_reordered(new_input_list, new_bigger_map, cur_index + 1, aim_index)
-            
-
-def get_middle_sums_reordered(file_name):
-    parsed_rules, parsed_lists = read_input(file_name)
+         
+def main_part2():
+    parsed_rules, parsed_lists = read_input("input.txt")
     num_to_bigger_map = build_num_to_bigger_map(parsed_rules)
     # print(num_to_bigger_map)
     middle_sum = 0
@@ -135,6 +134,6 @@ def get_middle_sums_reordered(file_name):
         if not check_order(parsed_list, num_to_bigger_map):
             filtered_bigger_map = filter_bigger_map(parsed_list, num_to_bigger_map)
             middle_sum += get_middle_number_reordered(parsed_list, filtered_bigger_map, 0, int((len(parsed_list) - 1) / 2))
-    return middle_sum
+    print(middle_sum)
 
-print(get_middle_sums_reordered("input.txt"))
+# main_part2()  
