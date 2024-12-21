@@ -99,7 +99,8 @@ def test_part2():
 
 def main_part2():
      corruptions = read_input("input.txt")
-     print(search_the_key_corruption(corruptions, 71))
+     corruption = search_the_key_corruption(corruptions, 71)
+     print(f"{corruption[1]},{corruption[0]}")
 
 main_part2()    
      
