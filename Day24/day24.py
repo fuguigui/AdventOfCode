@@ -26,6 +26,12 @@ class Node:
         if self.op == "OR":
             self.value = self.children[0].evaluate() | self.children[1].evaluate()
         return self.value
+    
+    def get_op(self):
+        return self.op
+    
+    def get_name(self):
+        return self.name
 
 def parse_line(line, name_to_nodes):
     if ":" in line:
@@ -34,7 +40,8 @@ def parse_line(line, name_to_nodes):
         value = int(split_line[1])
         node = Node(name, value=value)
         name_to_nodes[name] = node
-    elif "->" in line:
+        return name, node
+    if "->" in line:
         split_line = line.split("->")
         operands = split_line[0].split()
         result = split_line[1].split()
@@ -58,13 +65,17 @@ def parse_line(line, name_to_nodes):
         else:
             result_node = Node(result_name, children=[left_node, right_node], op=operands[1])
             name_to_nodes[result_name] = result_node
+        return result_name, result_node
 
 def read_input(file_name):
     name_to_nodes = {}
+    highest_z = 0
     with open('Day24/' + file_name, 'r') as file:
         for line in file.readlines():
-            parse_line(line.strip(), name_to_nodes)
-    return name_to_nodes
+            name, node = parse_line(line.strip(), name_to_nodes)
+            if name[0] == 'z' and int(name[1:]) > highest_z:
+                highest_z = int(name[1:])
+    return name_to_nodes, highest_z
 
 def test_read_input():
     name_to_nodes =read_input("sample.txt")
@@ -86,7 +97,7 @@ def test_part1():
 # test_part1()
 
 def main_part1():
-    name_to_nodes = read_input("input.txt")
+    name_to_nodes, _ = read_input("input.txt")
     result = []
     for name in name_to_nodes.keys():
         if name[0] == 'z':
@@ -97,38 +108,39 @@ def main_part1():
 
 # main_part1()
 
-ncw XOR btr -> z07
-y07 XOR x07 -> btr
-wgj OR qth -> ncw
-x06 AND y06 -> wgj
-qnr AND mpn -> qth
-fqb OR jrk -> qnr
-x06 XOR y06 -> mpn
-y05 AND x05 -> fqb
-skf AND qph -> jrk
-x05 XOR y05 -> skf
-hgw OR jjg -> qph
-gwg AND ggg -> hgw
-x04 AND y04 -> jjg
-kfr OR wjq -> gwg
-y04 XOR x04 -> ggg
-y03 AND x03 -> kfr
-dnk AND wcj -> wjq
-x03 XOR y03 -> dnk
-nvs OR nnt -> wcj
-x02 AND y02 -> nvs
-jvk AND jpt -> nnt
-y02 XOR x02 -> jvk
-npn OR jjv -> jpt
-y01 AND x01 -> npn
-kjh AND kkc -> jjv
-y01 XOR x01 -> kjh
-x00 AND y00 -> kkc
+def read_input(file_name):
+    highest_z = 0
+    operations = []
+    with open('Day24/' + file_name, 'r') as file:
+        for line in file.readlines():
+            if "->" not in line:
+                continue
+            op1, op, op2, _, res = line.strip().split(" ")
+            operations.append((op1, op, op2, res))
+            if res[0] == "z" and int(res[1:]) > highest_z:
+                highest_z = int(res[1:])
+    return operations, highest_z
 
-y00 XOR x00 -> z00
-(y01 XOR x01 ) XOR (x00 AND y00) -> z01
-kjh XOR kkc -> z01
-(y02 XOR x02) XOR ((y01 AND x01) OR ((y01 XOR x01) AND (x00 AND y00))) -> z02
-jvk XOR jpt -> z02
-npn OR jjv -> jpt
-kjh AND kkc -> jjv
+def find_wrong_sets(operations, highest_z):
+    wrong = set()
+    for op1, op, op2, res in operations:
+        if op != "XOR" and res[0] == "z" and int(res[1:]) != highest_z:
+            wrong.add(res)
+        if op == "AND" and "x00" not in [op1, op2]:
+            for subop1, subop, subop2, _ in operations:
+                if (res == subop1 or res == subop2) and subop != "OR":
+                    wrong.add(res)
+        if op == "XOR":
+            for subop1, subop, subop2, _ in operations:
+                if (res == subop1 or res == subop2) and subop == "OR":
+                    wrong.add(res)
+            if res[0] not in ["x", "y", "z"] and op1[0] not in ["x", "y", "z"] and op2[0] not in ["x", "y", "z"]:
+                wrong.add(res)
+    return wrong
+
+def main_part2():
+    operations, highest_z = read_input("input.txt")
+    result = find_wrong_sets(operations, highest_z)
+    print(",".join(sorted(result)))
+
+main_part2()
