@@ -1,4 +1,4 @@
-My solution in python for https://adventofcode.com/2024.
+My solution in python for https://adventofcode.com/2024. 50 stars done! (2024-12-29).
 
 How to run:
 
